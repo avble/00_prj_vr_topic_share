@@ -42,13 +42,36 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 			/>
 			 -->
 
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+ 
 			 <Button
 			     android:id="@+id/button_get_topic"
-			     android:layout_width="match_parent"
+			     android:layout_width="wrap_content"
 			     android:layout_height="wrap_content"
 			     android:layout_gravity="bottom"
 			     android:text="Get Topic" 
 			     android:padding="10dp"/>
-
+			 
+			 <Button
+			     android:id="@+id/button_clear"
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:layout_gravity="bottom"
+			     android:text="Clear" 
+			     android:padding="10dp"/>
+			 
+			 
+			 </TableRow>
+			 </TableLayout>
+			 
+			 
+			 
 	</LinearLayout>
 </LinearLayout>
