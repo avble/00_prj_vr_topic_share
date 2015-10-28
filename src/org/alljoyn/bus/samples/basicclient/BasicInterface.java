@@ -27,7 +27,7 @@ import org.alljoyn.bus.annotation.BusMethod;
  * not given the fully qualified name of the Java interface is be used.  In most instances its best
  * to assign an interface name since it helps promote code reuse.
  */
-@BusInterface(name = "org.alljoyn.Bus.sample")
+@BusInterface(name = "org.alljoyn.Bus.VEriK.GetTopic")
 public interface BasicInterface {
 
     /*
@@ -40,4 +40,7 @@ public interface BasicInterface {
      */
     @BusMethod
     String cat(String inStr1, String inStr2) throws BusException;
+    
+    @BusMethod
+    String get_topic(String key) throws BusException;
 }

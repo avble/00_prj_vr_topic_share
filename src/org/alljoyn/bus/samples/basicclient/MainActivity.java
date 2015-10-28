@@ -49,7 +49,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Client extends Activity {
+public class MainActivity extends Activity {
     /* Load the native alljoyn_java library. */
     static {
         System.loadLibrary("alljoyn_java");
@@ -99,7 +99,7 @@ public class Client extends Activity {
                 	Toast.makeText(getApplicationContext(), (String) msg.obj, Toast.LENGTH_LONG).show();
                 	break;
                 case MESSAGE_START_PROGRESS_DIALOG:
-                    mDialog = ProgressDialog.show(Client.this, 
+                    mDialog = ProgressDialog.show(MainActivity.this, 
                                                   "", 
                                                   "Finding GetTopic Service.\nPlease wait...", 
                                                   true,
@@ -130,7 +130,7 @@ public class Client extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
                 Message msg = mBusHandler.obtainMessage(BusHandler.CAT, 
-                        Client.keyValue); 
+                        MainActivity.keyValue); 
                 mBusHandler.sendMessage(msg);
 				
 			}
@@ -191,7 +191,7 @@ public class Client extends Activity {
 	        return true;
 	    case R.id.setting:
             Intent intent1 = new Intent(this, SettingActivity.class);
-            intent1.putExtra(Client.key, Client.keyValue);
+            intent1.putExtra(MainActivity.key, MainActivity.keyValue);
             /*
             intent1.putExtra(share_mqtt_srv, mqttSRV);
             intent1.putExtra(share_topic, topic);
@@ -221,7 +221,8 @@ public class Client extends Activity {
          *
          * The name uses reverse URL style of naming, and matches the name used by the service.
          */
-        private static final String SERVICE_NAME = "org.alljoyn.Bus.sample";
+        private static final String SERVICE_NAME = "org.alljoyn.Bus.VEriK.GetTopic";
+        private static final String OBJ_PATH = "/GetTopic";
         private static final short CONTACT_PORT=25;
 
         private BusAttachment mBus;
@@ -352,7 +353,7 @@ public class Client extends Activity {
                      * "/sample", uses sessionID of CONTACT_PORT, and implements the BasicInterface.
                      */
                 	mProxyObj =  mBus.getProxyBusObject(SERVICE_NAME, 
-                										"/sample",
+                										OBJ_PATH,
                 										sessionId.value,
                 										new Class<?>[] { BasicInterface.class });
 
@@ -388,7 +389,8 @@ public class Client extends Activity {
                 try {
                 	if (mBasicInterface != null) {
                 		//sendUiMessage(MESSAGE_PING, msg.obj + " and " + msg.obj);
-                		String reply = mBasicInterface.cat((String) msg.obj, (String) msg.obj);
+                		//String reply = mBasicInterface.cat((String) msg.obj, (String) msg.obj);
+                		String reply = mBasicInterface.get_topic((String)msg.obj);
                 		sendUiMessage(MESSAGE_PING_REPLY, reply);
                 	}
                 } catch (BusException ex) {

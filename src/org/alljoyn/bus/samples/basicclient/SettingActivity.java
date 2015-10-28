@@ -21,7 +21,7 @@ public class SettingActivity extends Activity {
         }
         
 
-        final String key = extras.getString(Client.key);
+        final String key = extras.getString(MainActivity.key);
         ed_key = (EditText)findViewById(R.id.editText_key);
         ed_key.setText(key);        
 	}
@@ -46,7 +46,7 @@ public class SettingActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		Client.keyValue = ed_key.getText().toString();
+		MainActivity.keyValue = ed_key.getText().toString();
 		super.onBackPressed();
 	}
 	
