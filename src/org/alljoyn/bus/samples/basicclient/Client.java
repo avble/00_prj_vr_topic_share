@@ -136,6 +136,17 @@ public class Client extends Activity {
 			}
 		});
         
+        Button button_clear = (Button)findViewById(R.id.button_clear);
+        button_clear.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mListViewArrayAdapter.clear();
+				
+			}
+		});
+        
+        
 
         /*
         mEditText = (EditText) findViewById(R.id.EditText);

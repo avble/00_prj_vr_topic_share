@@ -27,11 +27,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 		android:transcriptMode="alwaysScroll"
 		android:layout_weight="1.0" 
 		/>
-	<LinearLayout 
-		android:orientation="horizontal"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		>
 		<!-- 
 		<EditText android:id="@+id/EditText"
 			android:layout_height="wrap_content" 
@@ -55,7 +50,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 			     android:id="@+id/button_get_topic"
 			     android:layout_width="wrap_content"
 			     android:layout_height="wrap_content"
-			     android:layout_gravity="bottom"
 			     android:text="Get Topic" 
 			     android:padding="10dp"/>
 			 
@@ -63,15 +57,13 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 			     android:id="@+id/button_clear"
 			     android:layout_width="wrap_content"
 			     android:layout_height="wrap_content"
-			     android:layout_gravity="bottom"
 			     android:text="Clear" 
 			     android:padding="10dp"/>
 			 
 			 
 			 </TableRow>
+			 
 			 </TableLayout>
 			 
 			 
-			 
-	</LinearLayout>
 </LinearLayout>
