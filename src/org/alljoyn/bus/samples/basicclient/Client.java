@@ -27,6 +27,7 @@ import org.alljoyn.bus.Status;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -38,8 +39,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,9 +61,15 @@ public class Client extends Activity {
     private static final int MESSAGE_START_PROGRESS_DIALOG = 4;
     private static final int MESSAGE_STOP_PROGRESS_DIALOG = 5;
 
-    private static final String TAG = "BasicClient";
-
+    private static final String TAG = "GetTopic";
+    
+    public static final String key = "key";
+    public static String keyValue = "0123456789";
+    
+    public static String topic = "/VERiK/topic0123456789";
+/*
     private EditText mEditText;
+  */
     private ArrayAdapter<String> mListViewArrayAdapter;
     private ListView mListView;
     private Menu menu;
@@ -75,20 +85,23 @@ public class Client extends Activity {
                 switch (msg.what) {
                 case MESSAGE_PING:
                     String cat = (String) msg.obj;
-                    mListViewArrayAdapter.add("Cat args:  " + cat);
+                    //mListViewArrayAdapter.clear();
+                    mListViewArrayAdapter.add("The receied Topic:  " + cat);
                     break;
+                    
                 case MESSAGE_PING_REPLY:
                     String ret = (String) msg.obj;
                     mListViewArrayAdapter.add("Reply:  " + ret);
-                    mEditText.setText("");
+                    //mEditText.setText("");
                     break;
+                    
                 case MESSAGE_POST_TOAST:
                 	Toast.makeText(getApplicationContext(), (String) msg.obj, Toast.LENGTH_LONG).show();
                 	break;
                 case MESSAGE_START_PROGRESS_DIALOG:
                     mDialog = ProgressDialog.show(Client.this, 
                                                   "", 
-                                                  "Finding Basic Service.\nPlease wait...", 
+                                                  "Finding GetTopic Service.\nPlease wait...", 
                                                   true,
                                                   true);
                     break;
@@ -109,14 +122,28 @@ public class Client extends Activity {
         mListViewArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
         mListView = (ListView) findViewById(R.id.ListView);
         mListView.setAdapter(mListViewArrayAdapter);
+        
+        Button button_get_topic = (Button)findViewById(R.id.button_get_topic);
+        button_get_topic.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+                Message msg = mBusHandler.obtainMessage(BusHandler.CAT, 
+                        Client.keyValue); 
+                mBusHandler.sendMessage(msg);
+				
+			}
+		});
+        
 
+        /*
         mEditText = (EditText) findViewById(R.id.EditText);
         mEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE)
-                      /*  && event.getAction() == KeyEvent.ACTION_UP)  */ {
-                        /* Call the remote object's cat method. */
+                    {
                         Message msg = mBusHandler.obtainMessage(BusHandler.CAT, 
                                                                 view.getText().toString());
                         mBusHandler.sendMessage(msg);
@@ -124,15 +151,11 @@ public class Client extends Activity {
                     return true;
                 }
             });
-
+*/
         /* Make all AllJoyn calls through a separate handler thread to prevent blocking the UI. */
         HandlerThread busThread = new HandlerThread("BusHandler");
         busThread.start();
         mBusHandler = new BusHandler(busThread.getLooper());
-
-        /* Connect to an AllJoyn object. */
-        mBusHandler.sendEmptyMessage(BusHandler.CONNECT);
-        mHandler.sendEmptyMessage(MESSAGE_START_PROGRESS_DIALOG);
     }
     
     @Override
@@ -150,6 +173,21 @@ public class Client extends Activity {
 	    case R.id.quit:
 	    	finish();
 	        return true;
+	    case R.id.searching:
+	        /* Connect to an AllJoyn object. */
+	        mBusHandler.sendEmptyMessage(BusHandler.CONNECT);
+	        mHandler.sendEmptyMessage(MESSAGE_START_PROGRESS_DIALOG);
+	        return true;
+	    case R.id.setting:
+            Intent intent1 = new Intent(this, SettingActivity.class);
+            intent1.putExtra(Client.key, Client.keyValue);
+            /*
+            intent1.putExtra(share_mqtt_srv, mqttSRV);
+            intent1.putExtra(share_topic, topic);
+            intent1.putExtra(share_pin, pincode);
+            */
+            startActivity(intent1);
+            return true;
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
@@ -338,7 +376,7 @@ public class Client extends Activity {
             case CAT: {
                 try {
                 	if (mBasicInterface != null) {
-                		sendUiMessage(MESSAGE_PING, msg.obj + " and " + msg.obj);
+                		//sendUiMessage(MESSAGE_PING, msg.obj + " and " + msg.obj);
                 		String reply = mBasicInterface.cat((String) msg.obj, (String) msg.obj);
                 		sendUiMessage(MESSAGE_PING_REPLY, reply);
                 	}
@@ -384,4 +422,13 @@ public class Client extends Activity {
     private void logInfo(String msg) {
             Log.i(TAG, msg);
     }
+    
+
+	void handleSendText(Intent intent) {
+	    String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+	    if (sharedText != null) {
+	        // Update UI to reflect text being shared
+	    }
+	}
+
 }

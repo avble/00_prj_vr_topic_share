@@ -15,9 +15,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 -->
 <resources>
-    
+
     <string name="app_name">Basic Client</string>
+    <string name="enter_message_hint">Enter message</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
-
-<string name="enter_message_hint">Enter message</string>
 </resources>
